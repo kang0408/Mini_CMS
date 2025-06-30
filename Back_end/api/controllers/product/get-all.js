@@ -31,46 +31,59 @@ module.exports = {
     },
   },
 
-  exits: {},
+  exits: {
+    serverError: {
+      responseType: "serverError",
+      description: "Something went wrong on the server.",
+    },
+  },
 
   fn: async function (inputs) {
-    const { page, limit, search, sortBy, sortValue } = inputs;
+    try {
+      const { page, limit, search, sortBy, sortValue } = inputs;
 
-    const whereOptions = {};
+      const whereOptions = {};
 
-    if (search) {
-      whereOptions.title = {
-        $regex: search,
-        $options: "i",
+      if (search) {
+        whereOptions.title = {
+          $regex: search,
+          $options: "i",
+        };
+      }
+
+      const mongoClient = Product.getDatastore().manager.client;
+
+      const products = await mongoClient
+        .db("mini_cms")
+        .collection("products")
+        .find(whereOptions)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .sort({
+          [sortBy]: sortValue,
+        })
+        .toArray();
+
+      const total = products.length;
+      const pageTotal = Math.ceil(total / limit);
+
+      return {
+        status: 200,
+        message: "Get all products successfully",
+        data: {
+          products: products,
+          total,
+          page,
+          limit,
+          pageTotal,
+        },
       };
+    } catch (error) {
+      sails.log.error("Server Error: ", err);
+      return exits.serverError({
+        status: 500,
+        message: "Internal Server Error",
+      });
     }
-
-    const mongoClient = Product.getDatastore().manager.client;
-
-    const products = await mongoClient
-      .db("mini_cms")
-      .collection("products")
-      .find(whereOptions)
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({
-        [sortBy]: sortValue,
-      })
-      .toArray();
-
-    const total = products.length;
-    const pageTotal = Math.ceil(total / limit);
-
-    return {
-      status: 200,
-      message: "Get all products successfully",
-      data: {
-        products: products,
-        total,
-        page,
-        limit,
-        pageTotal,
-      },
-    };
   },
 };
