@@ -79,7 +79,7 @@ module.exports = {
         },
       };
     } catch (error) {
-      sails.log.error("Server Error: ", err);
+      sails.log.error("Server Error: ", error);
       return exits.serverError({
         status: 500,
         message: "Internal Server Error",
