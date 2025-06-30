@@ -9,12 +9,18 @@
  */
 
 const PREFIX = "/api/v1";
+const PRODUCT_PREFIX = "/products";
 
 const routes = [
   {
     method: "GET",
-    path: PREFIX + "/products",
+    path: PREFIX + PRODUCT_PREFIX,
     action: "product/get-all",
+  },
+  {
+    method: "GET",
+    path: PREFIX + PRODUCT_PREFIX + "/:id",
+    action: "product/get-details",
   },
 ];
 
