@@ -56,6 +56,11 @@ const routes = [
     action: "user/update-user",
   },
   {
+    method: "POST",
+    path: PREFIX + USER_PREFIX + "/create",
+    action: "user/create-user",
+  },
+  {
     method: "DELETE",
     path: PREFIX + USER_PREFIX + "/delete/:id",
     action: "user/delete-user",
