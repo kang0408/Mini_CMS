@@ -50,6 +50,11 @@ const routes = [
     path: PREFIX + USER_PREFIX + "/:id",
     action: "user/get-details",
   },
+  {
+    method: "PATCH",
+    path: PREFIX + USER_PREFIX + "/update/:id",
+    action: "user/update-user",
+  },
 ];
 
 const routesObj = {};
