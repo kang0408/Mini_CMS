@@ -10,8 +10,10 @@
 
 const PREFIX = "/api/v1";
 const PRODUCT_PREFIX = "/products";
+const USER_PREFIX = "/users";
 
 const routes = [
+  // PRODUCT
   {
     method: "GET",
     path: PREFIX + PRODUCT_PREFIX,
@@ -36,6 +38,12 @@ const routes = [
     method: "DELETE",
     path: PREFIX + PRODUCT_PREFIX + "/delete/:id",
     action: "product/delete-product",
+  },
+  // USER
+  {
+    method: "GET",
+    path: PREFIX + USER_PREFIX,
+    action: "user/get-all",
   },
 ];
 
