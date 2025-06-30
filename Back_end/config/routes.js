@@ -27,6 +27,16 @@ const routes = [
     path: PREFIX + PRODUCT_PREFIX + "/update/:id",
     action: "product/update-product",
   },
+  {
+    method: "POST",
+    path: PREFIX + PRODUCT_PREFIX + "/create",
+    action: "product/create-product",
+  },
+  {
+    method: "DELETE",
+    path: PREFIX + PRODUCT_PREFIX + "/delete/:id",
+    action: "product/delete-product",
+  },
 ];
 
 const routesObj = {};
