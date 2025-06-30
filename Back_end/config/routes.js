@@ -22,6 +22,11 @@ const routes = [
     path: PREFIX + PRODUCT_PREFIX + "/:id",
     action: "product/get-details",
   },
+  {
+    method: "PATCH",
+    path: PREFIX + PRODUCT_PREFIX + "/update/:id",
+    action: "product/update-product",
+  },
 ];
 
 const routesObj = {};
