@@ -45,6 +45,11 @@ const routes = [
     path: PREFIX + USER_PREFIX,
     action: "user/get-all",
   },
+  {
+    method: "GET",
+    path: PREFIX + USER_PREFIX + "/:id",
+    action: "user/get-details",
+  },
 ];
 
 const routesObj = {};
