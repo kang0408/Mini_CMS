@@ -55,6 +55,11 @@ const routes = [
     path: PREFIX + USER_PREFIX + "/update/:id",
     action: "user/update-user",
   },
+  {
+    method: "DELETE",
+    path: PREFIX + USER_PREFIX + "/delete/:id",
+    action: "user/delete-user",
+  },
 ];
 
 const routesObj = {};
