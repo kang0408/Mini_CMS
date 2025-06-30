@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  tableName: "user",
+  tableName: "users",
   attributes: {
     username: {
       type: "string",
