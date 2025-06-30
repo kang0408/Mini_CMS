@@ -1,0 +1,76 @@
+module.exports = {
+  friendlyName: "Get all",
+
+  description: "",
+
+  inputs: {
+    page: {
+      type: "number",
+      description: "The current page",
+      defaultsTo: 1,
+    },
+    limit: {
+      type: "number",
+      description: "Quantity of item in a page",
+      defaultsTo: 5,
+    },
+    search: {
+      type: "string",
+      description: "Search string query",
+    },
+    sortBy: {
+      type: "string",
+      description: "Sort by something, default is sorting by updated time",
+      defaultsTo: "updatedAt",
+    },
+    sortValue: {
+      type: "string",
+      description: "Sort decreasing or increasing",
+      isIn: ["ASC", "DESC"],
+      defaultsTo: "DESC",
+    },
+  },
+
+  exits: {},
+
+  fn: async function (inputs) {
+    const { page, limit, search, sortBy, sortValue } = inputs;
+
+    const whereOptions = {};
+
+    if (search) {
+      whereOptions.title = {
+        $regex: search,
+        $options: "i",
+      };
+    }
+
+    const mongoClient = Product.getDatastore().manager.client;
+
+    const products = await mongoClient
+      .db("mini_cms")
+      .collection("products")
+      .find(whereOptions)
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({
+        [sortBy]: sortValue,
+      })
+      .toArray();
+
+    const total = products.length;
+    const pageTotal = Math.ceil(total / limit);
+
+    return {
+      status: 200,
+      message: "Get all products successfully",
+      data: {
+        products: products,
+        total,
+        page,
+        limit,
+        pageTotal,
+      },
+    };
+  },
+};

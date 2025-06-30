@@ -8,7 +8,19 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
-module.exports.routes = {
+const PREFIX = "/api/v1";
 
+const routes = [
+  {
+    method: "GET",
+    path: PREFIX + "/products",
+    action: "product/get-all",
+  },
+];
 
-};
+const routesObj = {};
+routes.forEach((item) => {
+  routesObj[`${item.method} ${item.path}`] = { action: item.action };
+});
+
+module.exports.routes = routesObj;
