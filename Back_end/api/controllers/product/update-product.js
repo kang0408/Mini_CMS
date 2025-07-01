@@ -1,3 +1,5 @@
+const productSchema = require("../../validaters/productSchema");
+
 module.exports = {
   friendlyName: "Update product",
 
@@ -23,6 +25,10 @@ module.exports = {
       description: "Product not found",
       responseType: "notFound",
     },
+    badRequest: {
+      responseType: "badRequest",
+      description: "Create product failed",
+    },
     serverError: {
       responseType: "serverError",
       description: "Something went wrong on the server.",
@@ -38,14 +44,22 @@ module.exports = {
           message: "Product not found",
         });
 
+      const { error, value } = productSchema.update.validate(inputs);
+      if (error) {
+        return exits.badRequest({
+          status: 400,
+          message: error.message,
+        });
+      }
+
       const updateValues = {
-        title: inputs.title,
-        description: inputs.description,
-        price: inputs.price,
-        discountPercentage: inputs.discountPercentage,
-        stock: inputs.stock,
-        thumbnail: inputs.thumbnail,
-        status: inputs.status,
+        title: value.title,
+        description: value.description,
+        price: value.price,
+        discountPercentage: value.discountPercentage,
+        stock: value.stock,
+        thumbnail: value.thumbnail,
+        status: value.status,
       };
 
       const updatedProduct = await Product.updateOne({ id: existed.id }).set(

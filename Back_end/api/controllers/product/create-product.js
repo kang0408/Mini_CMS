@@ -1,3 +1,5 @@
+const productSchema = require("../../validaters/productSchema");
+
 module.exports = {
   friendlyName: "Create product",
 
@@ -18,6 +20,10 @@ module.exports = {
   },
 
   exits: {
+    badRequest: {
+      responseType: "badRequest",
+      description: "Create product failed",
+    },
     serverError: {
       responseType: "serverError",
       description: "Something went wrong on the server.",
@@ -26,7 +32,14 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      const newProduct = await Product.create(inputs).fetch();
+      const { error, value } = productSchema.create.validate(inputs);
+      if (error) {
+        return exits.badRequest({
+          status: 400,
+          message: error.message,
+        });
+      }
+      const newProduct = await Product.create(value).fetch();
 
       return exits.success({
         status: 200,
