@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authSchema = require("../../validaters/authSchema");
 
 module.exports = {
   friendlyName: "Login",
@@ -34,7 +35,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      const { email, password } = inputs;
+      const { error, value } = authSchema.login.validate(inputs);
+      if (error) {
+        return exits.badRequest({
+          status: 400,
+          message: error.message,
+        });
+      }
+
+      const { email, password } = value;
       const existed = await User.findOne({ email: email });
       if (!existed)
         return exits.notFound({
