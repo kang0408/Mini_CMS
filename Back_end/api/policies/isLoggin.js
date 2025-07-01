@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 
 module.exports = async function (req, res, proceed) {
   try {
@@ -29,7 +28,7 @@ module.exports = async function (req, res, proceed) {
 
     delete user.password;
 
-    req.user = user
+    req.user = user;
     return proceed();
   } catch (error) {
     sails.log.error("Server Error: ", error);
