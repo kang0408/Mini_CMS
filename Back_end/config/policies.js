@@ -8,15 +8,18 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
+const isLoggin = require("../api/policies/isLoggin");
+const isAdmin = require("../api/policies/isAdmin")
+
 module.exports.policies = {
-
   /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Default policy for all controllers and actions, unless overridden.       *
+   * (`true` allows public access)                                            *
+   *                                                                          *
+   ***************************************************************************/
 
-  // '*': true,
-
+  "product/get-all": true,
+  "product/*": [isLoggin, isAdmin],
+  "user/*": [isLoggin, isAdmin],
 };
