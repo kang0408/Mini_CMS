@@ -11,6 +11,7 @@
 const PREFIX = "/api/v1";
 const PRODUCT_PREFIX = "/products";
 const USER_PREFIX = "/users";
+const AUTH_PREFIX = "/auth";
 
 const routes = [
   // PRODUCT
@@ -64,6 +65,12 @@ const routes = [
     method: "DELETE",
     path: PREFIX + USER_PREFIX + "/delete/:id",
     action: "user/delete-user",
+  },
+  // AUTH
+  {
+    method: "POST",
+    path: PREFIX + AUTH_PREFIX + "/login",
+    action: "auth/login",
   },
 ];
 
