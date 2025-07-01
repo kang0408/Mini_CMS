@@ -13,6 +13,7 @@ module.exports = {
     },
     email: {
       type: "string",
+      required: true,
     },
     role: {
       type: "string",
@@ -30,7 +31,14 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      console.log(inputs);
+      const { email } = inputs;
+      const existed = await User.find({ email: email });
+      if (existed)
+        return exits.success({
+          status: 400,
+          message: "Email is existed",
+        });
+
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashPassword = await bcrypt.hash(
