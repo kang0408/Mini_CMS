@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const userSchema = require("../../validaters/userSchema");
 
 module.exports = {
   friendlyName: "Create user",
@@ -22,6 +23,10 @@ module.exports = {
   },
 
   exits: {
+    badRequest: {
+      responseType: "badRequest",
+      description: "Create product failed",
+    },
     serverError: {
       responseType: "serverError",
       description: "Something went wrong on the server.",
@@ -30,10 +35,18 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      const { email } = inputs;
-      const existed = await User.find({ email: email });
+      const { error, value } = userSchema.create.validate(inputs);
+      if (error) {
+        return exits.badRequest({
+          status: 400,
+          message: error.message,
+        });
+      }
+
+      const { email } = value;
+      const existed = await User.findOne({ email: email });
       if (existed)
-        return exits.success({
+        return exits.badRequest({
           status: 400,
           message: "Email is existed",
         });
@@ -45,7 +58,7 @@ module.exports = {
         salt
       );
 
-      const data = { ...inputs, password: hashPassword };
+      const data = { ...value, password: hashPassword };
 
       const newUser = await User.create(data).fetch();
 

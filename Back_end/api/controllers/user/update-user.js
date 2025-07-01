@@ -1,3 +1,5 @@
+const userSchema = require("../../validaters/userSchema");
+
 module.exports = {
   friendlyName: "Update user",
 
@@ -5,6 +7,12 @@ module.exports = {
 
   inputs: {
     id: { type: "string", required: true },
+    username: {
+      type: "string",
+    },
+    email: {
+      type: "string",
+    },
     role: { type: "string", isIn: ["user", "admin"] },
   },
 
@@ -12,6 +20,10 @@ module.exports = {
     notFound: {
       description: "Product not found",
       responseType: "notFound",
+    },
+    badRequest: {
+      responseType: "badRequest",
+      description: "Create product failed",
     },
     serverError: {
       responseType: "serverError",
@@ -28,8 +40,28 @@ module.exports = {
           message: "User not found",
         });
 
+      const { error, value } = userSchema.update.validate(inputs);
+      if (error) {
+        return exits.badRequest({
+          status: 400,
+          message: error.message,
+        });
+      }
+
+      if (value.email) {
+        const isMatch = await User.find({ email: value.email });
+        if (isMatch.length > 0) {
+          return exits.badRequest({
+            status: 400,
+            message: "Email is existed",
+          });
+        }
+      }
+
       const updateValues = {
-        role: inputs.role,
+        username: value.username,
+        email: value.email,
+        role: value.role,
       };
 
       const updatedUser = await User.updateOne({ id: existed.id }).set(
