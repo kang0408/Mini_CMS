@@ -1,0 +1,17 @@
+@import "./font.css";
+
+* {
+  font-family: var(--font-roboto);
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+body {
+  min-height: 100vh;
+}
