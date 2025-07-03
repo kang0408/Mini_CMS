@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function Button({
-  children = "Button",
+  children,
   color = "default",
   handleClick,
   type = "button",
@@ -28,7 +28,7 @@ export default function Button({
           ) : (
             ""
           )}
-          {children}
+          {children ? children : ""}
         </div>
       </button>
     </>
