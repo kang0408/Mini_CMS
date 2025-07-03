@@ -30,7 +30,9 @@ export default function Form({ children, handleSubmit, data, validater }) {
 
   return (
     <>
-      <form onSubmit={submitForm}>{enhancedChildren}</form>
+      <form onSubmit={submitForm} className="space-y-4">
+        {enhancedChildren}
+      </form>
     </>
   );
 }

@@ -14,7 +14,7 @@ export default function Input({
       <div
         className={`flex ${
           vertical ? "flex-col" : "flex-row items-center"
-        } not-last:mb-4 gap-1`}
+        } gap-1`}
       >
         {label ? (
           <label htmlFor={name} className="flex-2">
