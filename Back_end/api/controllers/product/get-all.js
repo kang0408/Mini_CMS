@@ -64,15 +64,20 @@ module.exports = {
         })
         .toArray();
 
-      const total = products.length;
-      const pageTotal = Math.ceil(total / limit);
+      const total = await mongoClient
+        .db("mini_cms")
+        .collection("products")
+        .find(whereOptions)
+        .toArray();
+
+      const pageTotal = Math.ceil(total.length / limit);
 
       return {
         status: 200,
         message: "Get all products successfully",
         data: {
           products: products,
-          total,
+          total: total.length,
           page,
           limit,
           pageTotal,

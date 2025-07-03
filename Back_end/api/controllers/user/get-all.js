@@ -65,15 +65,19 @@ module.exports = {
         .project({ password: 0 })
         .toArray();
 
-      const total = users.length;
-      const pageTotal = Math.ceil(total / limit);
+      const total = await mongoClient
+        .db("mini_cms")
+        .collection("users")
+        .find(whereOptions)
+        .toArray();
+      const pageTotal = Math.ceil(total.length / limit);
 
       return exits.success({
         status: 200,
         message: "Get all users successfully",
         data: {
           users: users,
-          total,
+          total: total.length,
           page,
           limit,
           pageTotal,
