@@ -33,9 +33,11 @@ export default function Input({
           onKeyDown={onKeyDown}
           className="border-1 border-gray rounded-md p-2 focus:outline-primary-300 flex-4"
         />
-        <p className="text-red-500 text-xs">
-          {validateMsg ? validateMsg[name] : ""}
-        </p>
+        {validateMsg ? (
+          <p className="text-red-500 text-xs">{validateMsg[name]}</p>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
