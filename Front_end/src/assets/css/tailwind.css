@@ -21,4 +21,6 @@
 
   --font-roboto: "Roboto", "sans-serif";
   --space-left: 15rem;
+  --header-height: 5rem;
+  --footer-height: 4rem;
 }

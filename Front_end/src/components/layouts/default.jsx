@@ -8,9 +8,12 @@ export default function DefaultLayout() {
   return (
     <>
       <Sidebar />
-      <div className="flex-1 ml-[var(--space-left)] flex flex-col">
+      <div className="flex-1 ml-[var(--space-left)]">
         <Header />
-        <div id="content" className="flex-1 p-4">
+        <div
+          id="content"
+          className="p-4 min-h-[calc(100%-var(--header-height)-var(--footer-height))]"
+        >
           <Outlet />
         </div>
         <Footer />

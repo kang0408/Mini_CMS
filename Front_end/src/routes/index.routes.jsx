@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 
 import DefaultLayout from "../components/layouts/default";
 import Dashboard from "../pages/Dashboard";
-import Products from "../pages/Products";
+import Products from "../pages/Products/Products";
 import Users from "../pages/Users";
 
 import AuthLayout from "../components/layouts/auth";
