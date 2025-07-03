@@ -1,10 +1,12 @@
 import { useRoutes } from "react-router-dom";
 
 import DefaultLayout from "../components/layouts/default";
-
 import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products";
 import Users from "../pages/Users";
+
+import AuthLayout from "../components/layouts/auth";
+import Login from "../pages/Login";
 
 const routes = [
   {
@@ -22,6 +24,16 @@ const routes = [
       {
         path: "/users",
         element: <Users />,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <Login />,
       },
     ],
   },
