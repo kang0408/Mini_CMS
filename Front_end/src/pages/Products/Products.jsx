@@ -102,6 +102,10 @@ export default function ProductList() {
     setToggleModal(!toggleModal);
   };
 
+  const navigateToEditPage = (item) => {
+    navigate(`/products/edit/${item._id}`);
+  };
+
   useEffect(() => {
     fetchProducts();
   }, [pageCurrent, sortBy, sortValue]);
