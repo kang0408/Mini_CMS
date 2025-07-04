@@ -53,7 +53,7 @@ module.exports = {
 
       const isMatched = await bcrypt.compare(password, existed.password);
       if (!isMatched)
-        return existed.badRequest({
+        return exits.badRequest({
           status: 400,
           message: "Password is not correct",
         });
