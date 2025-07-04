@@ -45,7 +45,7 @@ module.exports = {
       const whereOptions = {};
 
       if (search) {
-        whereOptions.title = {
+        whereOptions.email = {
           $regex: search,
           $options: "i",
         };
