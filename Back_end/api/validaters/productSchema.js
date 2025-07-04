@@ -4,7 +4,7 @@ module.exports.create = baseJoi.object({
   title: baseJoi.string().required().messages({
     "string.empty": "This field is not empty",
   }),
-  description: baseJoi.string(),
+  description: baseJoi.string().min(0).optional(),
   price: baseJoi.number().min(0).messages({
     "number.min": "Price is greater than 0",
     "number.base": "Price is number",
@@ -18,14 +18,14 @@ module.exports.create = baseJoi.object({
     "number.min": "Stock is greater than 0",
     "number.base": "Stock is number",
   }),
-  thumbnail: baseJoi.string(),
+  thumbnail: baseJoi.string().min(0),
   status: baseJoi.string().valid("active", "inactive").optional(),
 });
 
 module.exports.update = baseJoi.object({
   id: baseJoi.string(),
   title: baseJoi.string(),
-  description: baseJoi.string(),
+  description: baseJoi.string().min(0),
   price: baseJoi.number().min(0).messages({
     "number.min": "Price is greater than 0",
     "number.base": "Price is number",
@@ -39,6 +39,6 @@ module.exports.update = baseJoi.object({
     "number.min": "Stock is greater than 0",
     "number.base": "Stock is number",
   }),
-  thumbnail: baseJoi.string(),
+  thumbnail: baseJoi.string().min(0),
   status: baseJoi.string().valid("active", "inactive").optional(),
 });
