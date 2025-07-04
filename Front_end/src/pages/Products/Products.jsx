@@ -5,6 +5,7 @@ import api from "../../configs/axios.js";
 import Button from "../../components/common/Button.jsx";
 import Input from "../../components/common/Input.jsx";
 import Pagination from "../../components/common/Pagination.jsx";
+import Modal from "../../components/common/Modal.jsx";
 
 export default function ProductList() {
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ export default function ProductList() {
   const [searchString, setSearchString] = useState("");
   const [sortBy, setSortBy] = useState("updatedAt");
   const [sortValue, setSortValue] = useState("DESC");
+  const [toggleModal, setToggleModal] = useState(false);
 
   const fetchProducts = async (search = searchString) => {
     try {
@@ -62,6 +64,10 @@ export default function ProductList() {
   const handleReset = () => {
     setSearchString("");
     fetchProducts("");
+  };
+
+  const handleToggleModal = (product) => {
+    setToggleModal(!toggleModal);
   };
 
   useEffect(() => {
@@ -126,88 +132,96 @@ export default function ProductList() {
           </div>
         </div>
       </div>
-      <>
-        <table className="w-full">
-          <thead className="border-b-1 border-gray">
-            <tr>
-              <th className="p-4">Thumbnail</th>
-              <th className="p-4">Title</th>
-              <th className="p-4">Price</th>
-              <th className="p-4">Discount</th>
-              <th className="p-4">Stock</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              productList.map((product) => {
-                return (
-                  <tr key={product.id} className="text-center odd:bg-gray-200">
-                    <td>
-                      <div className="flex items-center justify-center">
-                        <img
-                          src={product.thumbnail}
-                          alt={product.title}
-                          className="w-24 h-24"
-                        />
-                      </div>
-                    </td>
-                    <td className="name">{product.title}</td>
-                    <td>{product.price}$</td>
-                    <td>{product.discountPercentage}%</td>
-                    <td>{product.stock}</td>
-                    <td>
-                      <span
-                        className={`${
-                          product.status == "active"
-                            ? "bg-green-500"
-                            : "bg-red-400"
-                        } px-4 py-1 rounded-3xl text-white`}
+
+      <table className="w-full">
+        <thead className="border-b-1 border-gray">
+          <tr>
+            <th className="p-4">Thumbnail</th>
+            <th className="p-4">Title</th>
+            <th className="p-4">Price</th>
+            <th className="p-4">Discount</th>
+            <th className="p-4">Stock</th>
+            <th className="p-4">Status</th>
+            <th className="p-4">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading ? (
+            productList.map((product) => {
+              return (
+                <tr key={product.id} className="text-center odd:bg-gray-200">
+                  <td>
+                    <div className="flex items-center justify-center">
+                      <img
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="w-24 h-24"
+                      />
+                    </div>
+                  </td>
+                  <td className="name">{product.title}</td>
+                  <td>{product.price}$</td>
+                  <td>{product.discountPercentage}%</td>
+                  <td>{product.stock}</td>
+                  <td>
+                    <span
+                      className={`${
+                        product.status == "active"
+                          ? "bg-green-500"
+                          : "bg-red-400"
+                      } px-4 py-1 rounded-3xl text-white`}
+                    >
+                      {product.status}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        color="primary"
+                        handleClick={() => navigateToEditPage(product)}
+                        icon="fluent:edit-20-filled"
                       >
-                        {product.status}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="flex items-center justify-center gap-2">
-                        <Button
-                          color="primary"
-                          handleClick={() => navigateToEditPage(product)}
-                          icon="fluent:edit-20-filled"
-                        >
-                          Edit
-                        </Button>
-                        <Button icon="material-symbols:delete-rounded">
-                          Delete
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : !productList || productList.length == 0 ? (
-              <tr>
-                <td colSpan={7} className="py-12">
-                  <p style={{ textAlign: "center" }}>No data...</p>
-                </td>
-              </tr>
-            ) : (
-              <tr>
-                <td colSpan={7} className="py-12">
-                  <p style={{ textAlign: "center" }}>Loading...</p>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-        <div className="mt-8 flex justify-end">
-          <Pagination
-            pageTotal={pageTotal}
-            pageCurrent={pageCurrent}
-            setPageCurrent={setPageCurrent}
-          />
-        </div>
-      </>
+                        Edit
+                      </Button>
+                      <Button
+                        icon="material-symbols:delete-rounded"
+                        onClick={handleToggleModal}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
+          ) : !productList || productList.length == 0 ? (
+            <tr>
+              <td colSpan={7} className="py-12">
+                <p style={{ textAlign: "center" }}>No data...</p>
+              </td>
+            </tr>
+          ) : (
+            <tr>
+              <td colSpan={7} className="py-12">
+                <p style={{ textAlign: "center" }}>Loading...</p>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <div className="mt-8 flex justify-end">
+        <Pagination
+          pageTotal={pageTotal}
+          pageCurrent={pageCurrent}
+          setPageCurrent={setPageCurrent}
+        />
+      </div>
+      <Modal
+        title="Are you want to delete this product?"
+        content="Be careful! This action can't not roll back"
+        modal={toggleModal}
+        toggleModal={() => setToggleModal(!toggleModal)}
+      />
     </>
   );
 }

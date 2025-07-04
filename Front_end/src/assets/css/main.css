@@ -18,6 +18,15 @@ button:disabled {
   border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
 }
 
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 body {
   min-height: 100vh;
   background-color: var(--color-white);
