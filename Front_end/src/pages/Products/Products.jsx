@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useMessageProvider } from "../../components/common/Message/Provider.jsx";
 import api from "../../configs/axios.js";
@@ -9,6 +10,7 @@ import Pagination from "../../components/common/Pagination.jsx";
 import Modal from "../../components/common/Modal.jsx";
 
 export default function ProductList() {
+  const navigate = useNavigate();
   const { useMessage } = useMessageProvider();
   const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState();
@@ -125,7 +127,11 @@ export default function ProductList() {
         <Button onClick={handleReset} icon="grommet-icons:power-reset" />
       </div>
       <div className="my-8 flex justify-between">
-        <Button color="primary" icon="mynaui:plus-solid">
+        <Button
+          color="primary"
+          icon="mynaui:plus-solid"
+          onClick={() => navigate("/products/create")}
+        >
           Create
         </Button>
         <div className="flex gap-4">
