@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useMessageProvider } from "../components/common/Message/Provider";
+import axios from "../configs/axios";
 
 import Form from "../components/common/Form";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 
 export default function Login() {
+  const { useMessage } = useMessageProvider();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,8 +40,24 @@ export default function Login() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const submitForm = () => {
-    console.log(formData);
+  const submitForm = async () => {
+    try {
+      const res = await axios.post("/auth/login", formData);
+      if (res.status == 200) {
+        localStorage.setItem("access_token", res.data.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
+        useMessage({
+          type: "success",
+          message: res.data.message,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      useMessage({
+        type: "error",
+        message: error.response.data.message,
+      });
+    }
   };
 
   return (

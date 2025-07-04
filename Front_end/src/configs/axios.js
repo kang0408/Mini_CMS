@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const api = axios.create({
@@ -9,6 +10,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
     return config;
   },
   (error) => {
@@ -21,6 +25,10 @@ api.interceptors.response.use(
     return res;
   },
   (error) => {
+    if (error.status == 401) {
+      const naviagate = useNavigate();
+      naviagate("/auth/login");
+    }
     return Promise.reject(error);
   }
 );
