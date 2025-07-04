@@ -8,7 +8,7 @@ export default function DefaultLayout() {
   return (
     <>
       <Sidebar />
-      <div className="h-full flex-1 ml-[var(--space-left)]">
+      <div className="h-full ml-[var(--space-left)]">
         <Header />
         <div
           id="content"

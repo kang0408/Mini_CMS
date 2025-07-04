@@ -23,10 +23,12 @@ export default function MessageProvider({ children, maxMessage = 5 }) {
 
   return (
     <MessageContext.Provider value={{ messageList, useMessage }}>
-      <div className="w-full flex flex-col relative overflow-hidden">
-        <MessageIndex msgList={messageList} />
-        <div className="flex-1">{children}</div>
+      <div className="fixed top-0 right-0 left-0 z-999">
+        <div className="">
+          <MessageIndex msgList={messageList} />
+        </div>
       </div>
+      {children}
     </MessageContext.Provider>
   );
 }
