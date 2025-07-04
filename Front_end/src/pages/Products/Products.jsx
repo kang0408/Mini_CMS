@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import { useMessageProvider } from "../../components/common/Message/Provider.jsx";
 import api from "../../configs/axios.js";
 
 import Button from "../../components/common/Button.jsx";
@@ -8,6 +9,7 @@ import Pagination from "../../components/common/Pagination.jsx";
 import Modal from "../../components/common/Modal.jsx";
 
 export default function ProductList() {
+  const { useMessage } = useMessageProvider();
   const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState();
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -16,18 +18,23 @@ export default function ProductList() {
   const [searchString, setSearchString] = useState("");
   const [sortBy, setSortBy] = useState("updatedAt");
   const [sortValue, setSortValue] = useState("DESC");
+  const [deletedId, setDeletedId] = useState("");
   const [toggleModal, setToggleModal] = useState(false);
 
   const fetchProducts = async (search = searchString) => {
     try {
       setLoading(false);
-      console.log(searchString);
       const { data } = await api.get(
         `products?page=${pageCurrent}&limit=${itemPerPage}&search=${search}&sortBy=${sortBy}&sortValue=${sortValue}`
       );
 
       if (data.status === 200) {
         setLoading(true);
+
+        useMessage({
+          type: "success",
+          message: data.message,
+        });
 
         setProductList(data.data.products);
         setPageCurrent(data.data.page);
@@ -37,6 +44,27 @@ export default function ProductList() {
     } catch (error) {
       console.log(error);
       setLoading(false);
+    }
+  };
+
+  const handleDeleteProduct = async (id = deletedId) => {
+    try {
+      console.log(deletedId);
+      const { data } = await api.delete(`/products/delete/${id}`);
+
+      if (data.status === 200) {
+        useMessage({
+          type: "success",
+          message: data.message,
+        });
+        fetchProducts();
+        setToggleModal(!toggleModal);
+      }
+    } catch (error) {
+      useMessage({
+        type: "error",
+        message: error.response.data.message,
+      });
     }
   };
 
@@ -67,6 +95,8 @@ export default function ProductList() {
   };
 
   const handleToggleModal = (product) => {
+    console.log(product._id);
+    setDeletedId(product._id);
     setToggleModal(!toggleModal);
   };
 
@@ -185,7 +215,7 @@ export default function ProductList() {
                       </Button>
                       <Button
                         icon="material-symbols:delete-rounded"
-                        onClick={handleToggleModal}
+                        onClick={() => handleToggleModal(product)}
                       >
                         Delete
                       </Button>
@@ -221,6 +251,7 @@ export default function ProductList() {
         content="Be careful! This action can't not roll back"
         modal={toggleModal}
         toggleModal={() => setToggleModal(!toggleModal)}
+        onConfirm={() => handleDeleteProduct(deletedId)}
       />
     </>
   );
