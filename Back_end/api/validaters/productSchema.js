@@ -25,7 +25,7 @@ module.exports.create = baseJoi.object({
 module.exports.update = baseJoi.object({
   id: baseJoi.string(),
   title: baseJoi.string(),
-  description: baseJoi.string().min(0),
+  description: baseJoi.string().min(0).optional(),
   price: baseJoi.number().min(0).messages({
     "number.min": "Price is greater than 0",
     "number.base": "Price is number",
