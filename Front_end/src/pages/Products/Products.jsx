@@ -191,11 +191,11 @@ export default function ProductList() {
               return (
                 <tr key={product.id} className="text-center odd:bg-gray-200">
                   <td>
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center p-2">
                       <img
                         src={product.thumbnail}
                         alt={product.title}
-                        className="w-24 h-24"
+                        className="w-20 h-20"
                       />
                     </div>
                   </td>
