@@ -5,10 +5,14 @@ import "./assets/css/main.css";
 import { BrowserRouter } from "react-router-dom";
 import App from "./pages/App.jsx";
 
+import MessageProvider from "./components/common/Message/Provider.jsx";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <MessageProvider>
+        <App />
+      </MessageProvider>
     </BrowserRouter>
   </StrictMode>
 );

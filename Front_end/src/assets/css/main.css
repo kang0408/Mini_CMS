@@ -27,6 +27,15 @@ button:disabled {
   }
 }
 
+@keyframes slide-from-right {
+  0% {
+    transform: translateX(300px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 body {
   min-height: 100vh;
   background-color: var(--color-white);
