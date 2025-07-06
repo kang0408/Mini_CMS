@@ -5,7 +5,9 @@ import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products/Products";
 import ProductCreate from "../pages/Products/Create";
 import ProductUpdate from "../pages/Products/Update";
-import Users from "../pages/Users";
+import Users from "../pages/Users/Users";
+import UserCreate from "../pages/Users/Create";
+import UserUpdate from "../pages/Users/Update";
 
 import AuthLayout from "../components/layouts/auth";
 import Login from "../pages/Login";
@@ -34,6 +36,14 @@ const routes = [
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/users/create",
+        element: <UserCreate />,
+      },
+      {
+        path: "/users/edit/:id",
+        element: <UserUpdate />,
       },
     ],
   },
