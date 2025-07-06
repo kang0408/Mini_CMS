@@ -65,6 +65,8 @@ export default function Login() {
       <p className="font-bold text-5xl mb-4">
         Admin<span className="text-primary-500">.</span>
       </p>
+      <p className="text-xs">Email: testing@gmail.com </p>
+      <p className="text-xs mb-2">Password: Abc@12345</p>
       <Form data={formData} validater={validater} handleSubmit={submitForm}>
         <Input
           label={"Email"}
