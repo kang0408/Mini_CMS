@@ -50,7 +50,7 @@ module.exports = {
 
       if (value.email) {
         const isMatch = await User.find({ email: value.email });
-        if (isMatch.length > 0) {
+        if (isMatch.length > 1) {
           return exits.badRequest({
             status: 400,
             message: "Email is existed",
