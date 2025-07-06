@@ -144,10 +144,14 @@ export default function Update() {
           </select>
         </div>
         <div className="flex gap-4">
-          <Button color="primary" type="submit">
+          <Button color="primary" type="submit" icon="fluent:edit-20-filled">
             Submit
           </Button>
-          <Button type="button" handleClick={backToProductList}>
+          <Button
+            type="button"
+            icon="ion:caret-back"
+            handleClick={backToProductList}
+          >
             Back
           </Button>
         </div>
