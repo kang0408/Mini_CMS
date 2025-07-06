@@ -16,6 +16,7 @@ export default function Create() {
     email: "",
     role: "user",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
@@ -28,15 +29,18 @@ export default function Create() {
 
   const handleAddProduct = async (item) => {
     try {
+      setIsLoading(true);
       const { data } = await api.post("users/create", item);
       if (data.status === 200) {
         useMessage({
           type: "success",
           message: data.message,
         });
+        setIsLoading(false);
         navigate("/users");
       }
     } catch (error) {
+      setIsLoading(false);
       useMessage({
         type: "error",
         message: error.response.data.message,
@@ -98,8 +102,12 @@ export default function Create() {
           </select>
         </div>
         <div className="flex gap-4">
-          <Button color="primary" type="submit" icon="mynaui:plus-solid">
-            Submit
+          <Button
+            color="primary"
+            type="submit"
+            icon={isLoading ? "line-md:loading-loop" : "mynaui:plus-solid"}
+          >
+            {!isLoading ? "Submit" : "Submitting..."}
           </Button>
           <Button
             type="button"

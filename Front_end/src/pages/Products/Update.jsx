@@ -21,6 +21,7 @@ export default function Update() {
     discountPercentage: 0,
     status: "active",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +34,7 @@ export default function Update() {
 
   const handleEditProduct = async () => {
     try {
+      setIsLoading(true);
       const { data } = await api.patch(
         `products/update/${productId}`,
         formData
@@ -43,9 +45,11 @@ export default function Update() {
           type: "success",
           message: data.message,
         });
+        setIsLoading(false);
         navigate("/products");
       }
     } catch (error) {
+      setIsLoading(false);
       useMessage({
         type: "error",
         message: error.response.data.message,
@@ -144,8 +148,12 @@ export default function Update() {
           </select>
         </div>
         <div className="flex gap-4">
-          <Button color="primary" type="submit" icon="fluent:edit-20-filled">
-            Submit
+          <Button
+            color="primary"
+            type="submit"
+            icon={isLoading ? "line-md:loading-loop" : "fluent:edit-20-filled"}
+          >
+            {!isLoading ? "Submit" : "Submitting..."}
           </Button>
           <Button
             type="button"
