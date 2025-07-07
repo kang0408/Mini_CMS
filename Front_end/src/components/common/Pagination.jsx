@@ -45,7 +45,7 @@ export default function Pagination({
     <>
       <div className="flex flex-row gap-2">
         <Button disabled={pageCurrent == 1} onClick={handlePrevPage}>
-          {"<"}
+          <span className="text-black">{"<"}</span>
         </Button>
         {paginater.map((item, index) => {
           return (
@@ -59,7 +59,7 @@ export default function Pagination({
           );
         })}
         <Button disabled={pageCurrent == pageTotal} onClick={handleNextPage}>
-          {">"}
+          <span className="text-black">{">"}</span>
         </Button>
       </div>
     </>

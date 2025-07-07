@@ -20,7 +20,7 @@ export default function Button({
         type={type}
         {...rest}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-black">
           {icon ? (
             <>
               <Icon icon={icon} className="text-xl" />
@@ -28,7 +28,7 @@ export default function Button({
           ) : (
             ""
           )}
-          {children ? children : ""}
+          {children ? <span className="text-black">{children}</span> : ""}
         </div>
       </button>
     </>

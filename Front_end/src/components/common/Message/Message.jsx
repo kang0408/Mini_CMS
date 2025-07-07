@@ -33,7 +33,7 @@ export default function Message({ type, message, isClosed, hoverAlive }) {
     <div
       className={`${
         handleTypeMessage(type).border
-      } flex items-center gap-4 w-96 bg-white drop-shadow-xl p-4 rounded-lg border-2 animate-[slide-from-right_0.5s_ease]`}
+      } flex items-center gap-4 w-96 bg-msg-bg text-msg-text drop-shadow-xl p-4 rounded-lg border-2 animate-[slide-from-right_0.5s_ease]`}
     >
       <Icon
         icon={handleTypeMessage(type).icon}

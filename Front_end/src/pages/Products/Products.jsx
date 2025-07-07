@@ -189,7 +189,10 @@ export default function ProductList() {
           {loading ? (
             productList.map((product) => {
               return (
-                <tr key={product.id} className="text-center odd:bg-gray-200">
+                <tr
+                  key={product.id}
+                  className="text-center not-last:border-b-1"
+                >
                   <td>
                     <div className="flex items-center justify-center p-2">
                       <img

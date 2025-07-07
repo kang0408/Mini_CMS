@@ -19,6 +19,9 @@
   --color-warning: #f0a020;
   --color-error: #d03050;
 
+  --color-msg-bg: #fff;
+  --color-msg-text: #1e2022;
+
   --font-roboto: "Roboto", "sans-serif";
   --space-left: 15rem;
   --header-height: 5rem;
